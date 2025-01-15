@@ -1,11 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 class Spielort {
     private int Id;
@@ -50,14 +51,7 @@ class Spielort {
 
     @Override
     public String toString() {
-        return "Spielort{" +
-                "Id=" + Id +
-                ", Team1='" + Team1 + '\'' +
-                ", Team2='" + Team2 + '\'' +
-                ", Datum=" + Datum +
-                ", Spielort='" + Spielort + '\'' +
-                ", Kapazitat=" + Kapazitat +
-                '}';
+        return Team1 + " " + "vs " + Team2 + " " + "-" + " Datum: " + Datum.getYear() + "-" + Datum.getMonth() + "-" + Datum.getDay() + " " + "- " + "Spielort: " + Spielort + "\n";
     }
 
     public void setDatum(Date datum) {
@@ -100,7 +94,7 @@ public class Main {
             Pattern datumPattern = Pattern.compile("<Datum>(.+?)</Datum>");
             Pattern team2Pattern = Pattern.compile("<Team2>(.+?)</Team2>");
             Pattern spielortPattern = Pattern.compile("<Spielort>(.+?)</Spielort>");
-            Pattern kapazitatPattern = Pattern.compile("<Kapazität>>(\\d+)</Kapazität>>");
+            Pattern kapazitatPattern = Pattern.compile("<Kapazität>(\\d+)</Kapazität>");
             Pattern team1Pattern = Pattern.compile("<Team1>(.+?)</Team1>");
 
             while ((line = br.readLine()) != null) {
@@ -159,8 +153,25 @@ public class Main {
         return spielorts;
     }
 
+    public static void displaySpielOrtByKapazitat(List<Spielort> spielorte, int wert) {
+        List<Spielort> display = spielorte.stream()
+                .filter(student -> student.getKapazitat() > wert)
+                .collect(Collectors.toList());
+
+        for(int i=0;i<display.size();i++) {
+            System.out.print(display.get(i));
+        }
+    }
+
     public static void main(String[] args) {
         List<Spielort> spielorte = readPointsFile("spielorte.xml");
-        System.out.println(spielorte);
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a number: ");
+
+        int number = Integer.parseInt(scanner.nextLine());
+        displaySpielOrtByKapazitat(spielorte, number);
+
     }
 }
