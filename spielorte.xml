@@ -1,0 +1,26 @@
+<logs>
+    <log>
+        <Datum>2024-06-14</Datum>
+        <Id>1</Id>
+        <Kapazität>75000</Kapazität>
+        <Spielort>München</Spielort>
+        <Team1>Deutschland</Team1>
+        <Team2>Frankreich</Team2>
+    </log>
+    <log>
+        <Datum>2024-06-15</Datum>
+        <Id>2</Id>
+        <Kapazität>70000</Kapazität>
+        <Spielort>Berlin</Spielort>
+        <Team1>Spanien</Team1>
+        <Team2>Italien</Team2>
+    </log>
+    <log>
+        <Datum>2024-06-16</Datum>
+        <Id>3</Id>
+        <Kapazität>60000</Kapazität>
+        <Spielort>Hamburg</Spielort>
+        <Team1>Rumänien</Team1>
+        <Team2>Portugal</Team2>
+    </log>
+</logs>
