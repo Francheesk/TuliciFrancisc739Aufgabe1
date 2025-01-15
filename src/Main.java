@@ -175,7 +175,25 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void writeSpielorteTimes(List<Spielort> spielorte, String outputFileName) throws IOException {
+        Map<String, Integer> spielorteNumbers = new HashMap<String,Integer>();
+        for (Spielort spielort : spielorte) {
+            spielorteNumbers.put(spielort.getSpielort(), 0);
+        }
+
+        spielorte.forEach(spielort ->
+                spielorteNumbers.put(spielort.getSpielort(), spielorteNumbers.get(spielort.getSpielort()) + 1)
+        );
+
+        List<String> sortedScores = spielorteNumbers.entrySet().stream()
+                .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+                .map(entry -> entry.getKey() + "%" + entry.getValue())
+                .collect(Collectors.toList());
+
+        Files.write(Paths.get(outputFileName), sortedScores);
+    }
+
+    public static void main(String[] args) throws IOException {
         List<Spielort> spielorte = readPointsFile("spielorte.xml");
 
         Scanner scanner = new Scanner(System.in);
@@ -186,5 +204,6 @@ public class Main {
         displaySpielOrtByKapazitat(spielorte, number);
         System.out.print("Games in munchen after the date given : \n");
         displaySpielOrtInMunchen(spielorte);
+        writeSpielorteTimes(spielorte,"spielanzahl.txt");
     }
 }
