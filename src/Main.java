@@ -155,7 +155,19 @@ public class Main {
 
     public static void displaySpielOrtByKapazitat(List<Spielort> spielorte, int wert) {
         List<Spielort> display = spielorte.stream()
-                .filter(student -> student.getKapazitat() > wert)
+                .filter(spiel -> spiel.getKapazitat() > wert)
+                .collect(Collectors.toList());
+
+        for(int i=0;i<display.size();i++) {
+            System.out.print(display.get(i));
+        }
+    }
+
+    public static void displaySpielOrtInMunchen(List<Spielort> spielorte) {
+        List <Spielort> display = spielorte.stream()
+                .filter(spiel -> Objects.equals(spiel.getSpielort(), "München"))
+                .filter(spiel -> spiel.getDatum().after(new Date(2024,6,30)))
+                .sorted((a,b) -> a.getDatum().compareTo(b.getDatum()))
                 .collect(Collectors.toList());
 
         for(int i=0;i<display.size();i++) {
@@ -172,6 +184,7 @@ public class Main {
 
         int number = Integer.parseInt(scanner.nextLine());
         displaySpielOrtByKapazitat(spielorte, number);
-
+        System.out.print("Games in munchen after the date given : \n");
+        displaySpielOrtInMunchen(spielorte);
     }
 }
